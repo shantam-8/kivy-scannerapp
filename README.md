@@ -1,2 +1,2 @@
-# kivy-scannerapp
-A Kivy based scanner application to scan barcodes and input its data into a Google Sheet spreadsheet.
+# Kivy-based Barcode Scanner Application
+A Python application to allow the user to keep stock of inventory. The barcodes of items are scanned using the device’s camera and options are provided to either add or remove the number of items in a Google Spreadsheet. Though this repository is aimed to be a flexible as possible, the application was designed to fulfill the purpose of Al Yasat Marbles and Granites Factory LLC.
