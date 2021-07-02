@@ -39,7 +39,7 @@ gc = gspread.service_account(
 wks = gc.open("Trial")
 
 
-## All Pages
+# All Pages
 class FunctionPage(GridLayout):
     # runs on initialization
     def __init__(self, **kwargs):
@@ -135,7 +135,7 @@ class CamScreen(BoxLayout):
 
                     if barcodeData not in found:
                         outputtext = text
-                        data = outputtext.split("_", 4)
+                        data = outputtext.split("_", 4) #Barcode split into values for different parameters, assuming they are seperated by an underscore.  
                         stone_in.text = data[0]
                         width_in.text = data[1]
                         length_in.text = data[2]
@@ -186,7 +186,7 @@ class DetailPage(GridLayout):
         self.add_widget(Label(text="Type: ", size_hint=(None, 0.8), width=300))
 
         dropdown = DropDown()
-        types = ["Granite", "Marble", "Onyx", "Sandstone"]
+        types = ["Material Categorisation 1", "Material Categorisation 2", "Material Categorisation 3", "Material Categorisation 4"]
 
         for i in types:
             btn = Button(
@@ -206,7 +206,7 @@ class DetailPage(GridLayout):
         self.add_widget(Label(text="Yard Number: ", size_hint=(None, 0.8), width=300))
 
         dropdown2 = DropDown()
-        yards = ["Industrial Area 15", "Industrial Area 11", "Sajja Industrial Area"]
+        yards = ["Area of Loading 1", "Area of Loading 2", "Area of Loading 3"]
 
         for i in yards:
             btn = Button(
@@ -222,14 +222,15 @@ class DetailPage(GridLayout):
         dropdown2.bind(on_select=lambda instance, x: setattr(mainbtn2, "text", x))
         self.add_widget(mainbtn2)
 
-        # add our buttons.
+        # Adding Accept Details Button.
         self.accept = Button(text="Accept Details", size_hint=(None, 0.8), width=300)
-        self.add_widget(Label())  # just take up the spot.
+        self.add_widget(Label())    # For organisation purposes.
         self.add_widget(self.accept)
         self.accept.bind(on_press=self.accept_func)
 
+        # Adding Scanner Button.
         self.back = Button(text="Back to Scanner", size_hint=(None, 0.8), width=300)
-        self.add_widget(Label())  # just take up the spot.
+        self.add_widget(Label())    # For organisation purposes.
         self.add_widget(self.back)
         self.back.bind(on_press=self.back_func)
 
@@ -268,7 +269,7 @@ class DetailPage(GridLayout):
                 stone_in.text.upper(), int(width_in.text), sort[0], sort[1], int(self.number_in.text),
                 details[0], details[1], date.today().strftime("%d/%m/%Y"), datetime.now().strftime("%H:%M:%S"),
             ]
-            yards = ["Industrial Area 15", "Industrial Area 11", "Sajja Industrial Area"]
+            yards = ["Area of Loading 1", "Area of Loading 2", "Area of Loading 3"]
             sheet = wks.get_worksheet(yards.index(detail[6]))
 
             if flag[0] == "True":
@@ -407,11 +408,11 @@ class Main(App):
         if is_connected() == True:
             self.screen_manager.current = "Function"
         else:
-            self.screen_manager.current = "Wifi"
+            self.screen_manager.current = "Wifi"    #Page starts when there is no internet connection.
 
         return self.screen_manager
 
-
+#Checks internet connection.
 def is_connected():
     try:
         socket.create_connection(("1.1.1.1", 53))
