@@ -33,6 +33,7 @@ breadth_in = TextInput(text=outputtext, size_hint=(None, 0.8), width=300, multil
 
 found = set()
 
+# Connection to Google Sheet. Authtication proven by JSON file. 
 gc = gspread.service_account(
     filename="C:\\Users\\Shantam Gilra\\Desktop\\Coding\\App\\credentials.json"
 )
@@ -41,7 +42,7 @@ wks = gc.open("Trial")
 
 # All Pages
 class FunctionPage(GridLayout):
-    # runs on initialization
+    # Function Page runs on initialisation. Provides options of adding or removing materials. Both button leads to the Camera Page.
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -53,16 +54,17 @@ class FunctionPage(GridLayout):
         self.remove = Button(text="Remove Materials", on_release=lambda btn: self.remove_button())
         self.add_widget(self.remove)
 
-    def add_button(self):  # Edit this
+    def add_button(self):
         flag[0] = "True"
         app_page.screen_manager.current = "Camera"
 
-    def remove_button(self):  # Edit this
+    def remove_button(self):
         flag[0] = "False"
         app_page.screen_manager.current = "Camera"
 
 
 class WifiApp(FloatLayout):
+    # Error Page if there is no Wifi connection. The "Retry Now" option checks Wifi connection again and allows access to the Function Page. 
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
@@ -92,7 +94,7 @@ class WifiApp(FloatLayout):
 
 
 class CamScreen(BoxLayout):
-    # Camera Screen
+    # Camera Page opens the device's camera and initialises the bar code scanner.
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.orientation = "vertical"
@@ -151,6 +153,7 @@ class CamScreen(BoxLayout):
 
 
 class DetailPage(GridLayout):
+    #Detail pages shows and confirms the data scanned by the barcode. The user also has to fill a few drop-down menus. If not filled, an error message is displayed. Based on the data gained by the Function Page, the Google sheet is updated.
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = 2
@@ -312,6 +315,7 @@ class DetailPage(GridLayout):
 
 
 class SuccessPage(FloatLayout):
+    #Success Page shows completion of process. Provides option to add more materials and ties back to the Function Page.
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
@@ -338,6 +342,7 @@ class SuccessPage(FloatLayout):
 
 
 class ErrorPage(FloatLayout):
+    #Error Page if there is human error, eg removing materials from the Google Sheet that are not available in the first place. 
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
