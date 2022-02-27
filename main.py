@@ -17,7 +17,6 @@ import numpy as np
 import cv2
 import socket
 import gspread
-import numpy as np
 from datetime import date, datetime
 
 
