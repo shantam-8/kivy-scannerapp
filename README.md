@@ -11,3 +11,5 @@ The application is built in Python using the following libraries:
   * Numpy Library
   * Socket Library
   * Datetime Library
+## Operation
+Run Scripts\activate in command line after being present in virtual environment folder, then run python main.py.
